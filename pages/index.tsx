@@ -1,14 +1,14 @@
-import Head from 'next/head'
+import Head from "next/head";
 import {
   Container,
   Main,
   Title,
   Description,
   CodeTag,
-} from '@/components/sharedstyles'
-import Cards from '@/components/cards'
+} from "@/components/sharedstyles";
+import Cards from "@/components/cards";
 
-export default function Home() {
+export default function Home({ repo }) {
   return (
     <Container>
       <Head>
@@ -22,12 +22,19 @@ export default function Home() {
         </Title>
 
         <Description>
-          Get started by editing
-          <CodeTag>pages/index.tsx</CodeTag>
+          Next repo stars: <CodeTag>{repo.stargazers_count}</CodeTag>
         </Description>
 
         <Cards />
       </Main>
     </Container>
-  )
+  );
+}
+
+export const runtime = "experimental-edge";
+
+export async function getServerSideProps() {
+  const res = await fetch("https://api.github.com/repos/vercel/next.js");
+  const repo = await res.json();
+  return { props: { repo } };
 }
