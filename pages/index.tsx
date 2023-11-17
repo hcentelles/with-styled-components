@@ -8,7 +8,7 @@ import {
 } from "@/components/sharedstyles";
 import Cards from "@/components/cards";
 
-export default function Home({ repo }) {
+export default function Home({ repo }: { repo: { stargazers_count: number } }) {
   return (
     <Container>
       <Head>
